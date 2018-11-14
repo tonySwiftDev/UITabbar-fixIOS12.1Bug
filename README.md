@@ -23,7 +23,6 @@ Thanks for you coming . If it work for you , please please please give me a **st
 
 
 
-
 #问题：
 iOS12.1 popViewControllerAnimated，UINavigationController返回时，item出现错位，文字消失，图标及小圆点出现位置偏移。过1-2秒才恢复到正常位置
 
