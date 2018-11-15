@@ -13,7 +13,7 @@
 
 #How to do:
  - You just  **add the file to you project**. 
- - no need other action
+ - on the  top of the file (UITabbar+fixIOS12.1Bug.swift), you will see  a constant,kIPhoneXSeriesTabbarButtonHeight, you modify accroding to  what value you use for tabbarr Height on the iPhone x series   .example 78.0.you modify to  **let** kIPhoneXSeriesTabbarButtonHeight: CGFloat = 78.0
  - just run your project         
  - 
 
@@ -35,6 +35,9 @@ iOS12.1 tabbar 每次出现icon会跳一下, 之前没有
 
 ##如何做：
 你只要下载这个文件放到你的项目中，就可以了，不用其他操作。
+
+因为这个方案是运行时注入，并不清楚你在iphoneX系列(X,Xs,XR,Xs Max)的机型中，使用的tabbar 高度.所以需要你在 文件顶部 **找到**这个常量**kIPhoneXSeriesTabbarButtonHeight**，然后**更改**为你实际项目中的iphoneX系列的tabbar高度
+
 另外这是一个swift文件，所以是为 **swift项目**准备的。 
 
 如果对你有帮助，请在右上角给个**星**，非常感谢

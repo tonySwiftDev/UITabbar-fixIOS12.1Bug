@@ -7,6 +7,10 @@
 //
 
 import Foundation
+import UIKit
+
+//tip: just modify , accordingly to your project ,what value set for tabbar height in iphonex Series
+let kIPhoneXSeriesTabbarButtonHeight: CGFloat = 88.0
 
 public protocol SwizzlingInjection {
     static func inject()
@@ -54,11 +58,12 @@ class UITabbarButtonInjection: SwizzlingInjection {
                 
                 var newFrame = frameagv
                 //兼容iphoneX
-                if UIDevice().userInterfaceIdiom == .phone && UIScreen.main.nativeBounds.height == 2436 {
+                let iphoneHeight = Int(UIScreen.main.nativeBounds.height)
+                if UIDevice().userInterfaceIdiom == .phone ,  [2436,2688,1792].contains(iphoneHeight) {
                     let tabBarHeight = frameagv.size.height
-                    let realTabBarHeight = Constant.tabBarHeight
-                    if tabBarHeight != realTabBarHeight {
-                        newFrame.size.height = realTabBarHeight
+                    
+                    if tabBarHeight != kIPhoneXSeriesTabbarButtonHeight {
+                        newFrame.size.height = kIPhoneXSeriesTabbarButtonHeight
                     }
                 }
                 // call original same with in object-c oriImp(oriclass,oriMethod,frameage)
@@ -75,6 +80,30 @@ class UITabbarButtonInjection: SwizzlingInjection {
             method_setImplementation(originalMethod, newImp)
             
         }
+    }
+}
+
+//just extension dispatchDueue
+public extension DispatchQueue {
+    
+    private static var _onceTracker = [String]()
+    
+    /**
+     Executes a block of code, associated with a unique token, only once.  The code is thread safe and will
+     only execute the code once even in the presence of multithreaded calls.
+     
+     - parameter token: A unique reverse DNS style name such as com.vectorform.<name> or a GUID
+     - parameter block: Block to execute once
+     */
+    public class func once(token: String, block: () -> Void) {
+        objc_sync_enter(self); defer { objc_sync_exit(self) }
+        
+        if _onceTracker.contains(token) {
+            return
+        }
+        
+        _onceTracker.append(token)
+        block()
     }
 }
 
